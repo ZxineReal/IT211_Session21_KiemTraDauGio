@@ -16,4 +16,6 @@ public class JwtRes {
     @Builder.Default
     private final String type = "Bearer";
     private Set<String> roles;
+    private String refreshToken;
+    private String fullName;
 }
