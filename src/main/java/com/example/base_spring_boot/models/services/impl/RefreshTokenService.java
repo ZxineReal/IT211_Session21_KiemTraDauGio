@@ -23,7 +23,7 @@ public class RefreshTokenService {
 
     public RefreshToken createRefreshToken(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new HttpNotFoundException("User not found with id: " + userId));
+                .orElseThrow(() -> new HttpNotFoundException("Không tìm thấy user với id : " + userId));
 
         RefreshToken refreshToken = RefreshToken.builder()
                 .user(user)
@@ -38,7 +38,7 @@ public class RefreshTokenService {
     public RefreshToken verifyExpiration(RefreshToken token) {
         if (token.getExpiryDate().isBefore(LocalDateTime.now())) {
             refreshTokenRepository.delete(token);
-            throw new HttpBadRequestException("Refresh token was expired. Please make a new signin request");
+            throw new HttpBadRequestException("Refresh token hết hạn");
         }
         return token;
     }
